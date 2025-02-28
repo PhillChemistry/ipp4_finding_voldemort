@@ -1,0 +1,12 @@
+finding anagrams:
+
+specification:
+create a program that looks for anagrams in a dictionary:
+- let the user enter a word
+- search for all partial anagrams in the word
+- display a list of the partial anagrams
+- let the user choose one of the partial anagrams
+- chck if the anagram is finished
+    if so, print the name 
+    otherwise, continue
+
