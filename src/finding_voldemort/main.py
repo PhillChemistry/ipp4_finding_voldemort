@@ -39,8 +39,8 @@ def anagram_impossible(anagram_lst) -> bool:
 
 def print_finished(word:str, anagram: list) -> None:
     '''prints the finished anagram'''
-    print(f'This is your anagram to {word}',
-          *anagram, file=sys.stderr)
+    print(f'This is your anagram to {word}:')
+    print(', '.join(anagram))
 
 def main():
     '''main program'''

@@ -60,12 +60,24 @@ def test_anagram_is_finished_true():
 
 
 def test_anagram_is_finished_false():
-    '''fn returns false if not finished''''
+    '''fn returns false if not finished'''
     assert not m.anagram_is_finished(NAME, [''])
 
 
-
 #anagram_impossible:
+def test_anagram_is_impossible_empty_gloss():
+    '''fn returns true if glossary is empty'''
+    assert  m.anagram_impossible([])
 
+
+def test_anagram_impossible_not_true():
+    '''fn returns false if gloss contains words'''
+    assert not m.anagram_impossible(CHOICES)
 
 #print_finished:
+def test_print_finished_correct_format(capsys):
+    ''''fn returns correct format'''
+    m.print_finished(NAME, GLOSS[:2])
+    capture = capsys.readouterr()
+    assert capture.out == \
+            'This is your anagram to Voldemort:\nvolde, mort\n'
