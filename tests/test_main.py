@@ -1,5 +1,6 @@
 '''únit tests for main'''
 import builtins
+import pytest
 import finding_voldemort.main as m
 
 NAME = 'Voldemort'
@@ -27,6 +28,7 @@ def test_choose_word_fn_reduces_length(monkeypatch):
     monkeypatch.setattr(builtins, 'input', mock_input)
     assert m.choose_word(CHOICES) == choice
 
+
 def test_choose_word_fn_wrong_choice(monkeypatch):
     '''tests fn if choice not in choices'''
     def mock_input(text):
@@ -53,6 +55,12 @@ def test_filter_gloss_fn_does_not_return_incorrect():
     assert not GLOSS[3] in filtered_gloss and not GLOSS[4] in filtered_gloss
 
 
+#reduce_remaining_word
+def test_reduce_remaining_word_fn_base_case():
+    '''fn handles example case corretly'''
+    shorter_list = m.reduce_remaining_word(list(NAME), list(GLOSS[0]))
+    assert shorter_list == ['m', 'o', 'r', 't']
+
 #anagram_is_finished:
 def test_anagram_is_finished_true():
     '''fn returns true when the anagram is finished'''
@@ -73,6 +81,7 @@ def test_anagram_is_impossible_empty_gloss():
 def test_anagram_impossible_not_true():
     '''fn returns false if gloss contains words'''
     assert not m.anagram_impossible(CHOICES)
+
 
 #print_finished:
 def test_print_finished_correct_format(capsys):
