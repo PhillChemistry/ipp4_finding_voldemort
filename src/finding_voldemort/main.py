@@ -75,6 +75,7 @@ def main():
     '''main program'''
     while True:
         glossary = ig.import_gloss(GLOSS_FILE)
+        wd.rm_short_wrds(glossary)
         word = enter_word()
         remaining_word = list(word.lower())
         chosen_anagrams = []
