@@ -1,9 +1,8 @@
 '''únit tests for main'''
 import builtins
-import pytest
 import finding_voldemort.main as m
 
-NAME = 'Voldemort'
+NAME = 'Voldemort'.lower()
 CHOICES = ['word1', 'word2', 'word3']
 GLOSS = ['volde', 'mort', 'v', 'xyz', 'zzz']
 
@@ -41,30 +40,33 @@ def test_choose_word_fn_wrong_choice(monkeypatch):
 #filter_gloss():
 def test_filter_gloss_fn_mock_gloss():
     '''fn returns correct results for 1 word'''
-    assert 'volde' in m.filter_gloss(GLOSS, NAME)
+    char_list = list(NAME.lower())
+    assert 'volde' in m.filter_gloss(GLOSS, char_list)
 
 
 def test_filter_gloss_fn_contains_all():
     '''fn contains all results in mock dictionary'''
-    assert m.filter_gloss(GLOSS, NAME) == ['volde', 'mort', 'v']
+    assert m.filter_gloss(GLOSS, list(NAME.lower())) == ['volde', 'mort', 'v']
 
 
-def test_filter_gloss_fn_does_not_return_incorrect():
+def test_filter_gloss_fn_doesnt_return_incorrect():
     '''fn doesn't return incorrect words'''
-    filtered_gloss = m.filter_gloss(GLOSS, NAME)
-    assert not GLOSS[3] in filtered_gloss and not GLOSS[4] in filtered_gloss
+    char_lst = list(NAME)
+    filtered_gloss = m.filter_gloss(GLOSS, char_lst)
+    assert GLOSS[3] not in filtered_gloss and GLOSS[4] not in filtered_gloss
 
 
 #reduce_remaining_word
 def test_reduce_remaining_word_fn_base_case():
     '''fn handles example case corretly'''
-    shorter_list = m.reduce_remaining_word(list(NAME), list(GLOSS[0]))
-    assert shorter_list == ['m', 'o', 'r', 't']
+    char_lst = list(NAME)
+    m.reduce_remaining_word(char_lst, GLOSS[0])
+    assert char_lst == ['m', 'o', 'r', 't']
 
 #anagram_is_finished:
 def test_anagram_is_finished_true():
     '''fn returns true when the anagram is finished'''
-    assert m.anagram_is_finished(NAME, CHOICES[:2])
+    assert m.anagram_is_finished(NAME, GLOSS[:2])
 
 
 def test_anagram_is_finished_false():
@@ -89,4 +91,4 @@ def test_print_finished_correct_format(capsys):
     m.print_finished(NAME, GLOSS[:2])
     capture = capsys.readouterr()
     assert capture.out == \
-            'This is your anagram to Voldemort:\nvolde, mort\n'
+            'This is your anagram to voldemort:\nvolde, mort\n'
