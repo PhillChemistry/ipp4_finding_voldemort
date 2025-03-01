@@ -1,6 +1,6 @@
 '''main program for finding voldemort'''
 import sys
-from finding_voldemort import sub_pckgs.import_gloss as ig
+import finding_voldemort.sub_pckgs.import_gloss as ig
 
 # ==========================================
 # INPUTS:

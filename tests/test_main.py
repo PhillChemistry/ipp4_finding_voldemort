@@ -1,16 +1,67 @@
-from finding_voldemort import main as m
+'''únit tests for main'''
+import builtins
+import finding_voldemort.main as m
 
-#enter word:
+NAME = 'Voldemort'
+CHOICES = ['word1', 'word2', 'word3']
+GLOSS = ['volde', 'mort', 'v', 'xyz', 'zzz']
 
+#enter_word():
+def test_enter_word(monkeypatch):
+    ''''tests fn with monkeypatch'''
+    def mock_fn(display_text):
+        print(display_text)
+        return NAME
+
+    monkeypatch.setattr(builtins, 'input', mock_fn)
+    assert m.enter_word() == NAME
+   
 
 #choose_word():
+def test_choose_word_fn_reduces_length(monkeypatch):
+    '''tests if fn returns a word in the list'''
+    choice = CHOICES[0]
+    def mock_input(text):
+        print(text)
+        return choice
+    monkeypatch.setattr(builtins, 'input', mock_input)
+    assert m.choose_word(CHOICES) == choice
+
+def test_choose_word_fn_wrong_choice(monkeypatch):
+    '''tests fn if choice not in choices'''
+    def mock_input(text):
+        print(text)
+        return 'not in choices'
+    monkeypatch.setattr(builtins, 'input', mock_input)
+    assert m.choose_word(CHOICES) == ''
 
 
 #filter_gloss():
+def test_filter_gloss_fn_mock_gloss():
+    '''fn returns correct results for 1 word'''
+    assert 'volde' in m.filter_gloss(GLOSS, NAME)
 
+
+def test_filter_gloss_fn_contains_all():
+    '''fn contains all results in mock dictionary'''
+    assert m.filter_gloss(GLOSS, NAME) == ['volde', 'mort', 'v']
+
+
+def test_filter_gloss_fn_does_not_return_incorrect():
+    '''fn doesn't return incorrect words'''
+    filtered_gloss = m.filter_gloss(GLOSS, NAME)
+    assert not GLOSS[3] in filtered_gloss and not GLOSS[4] in filtered_gloss
 
 
 #anagram_is_finished:
+def test_anagram_is_finished_true():
+    '''fn returns true when the anagram is finished'''
+    assert m.anagram_is_finished(NAME, CHOICES[:2])
+
+
+def test_anagram_is_finished_false():
+    '''fn returns false if not finished''''
+    assert not m.anagram_is_finished(NAME, [''])
 
 
 
